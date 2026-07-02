@@ -1,0 +1,11 @@
+node_modules
+.env
+server/data/*.db
+server/data/*.db-*
+*.log
+.DS_Store
+.claude/
+
+# NOTE: dist/ IS committed on purpose so the site can be hosted directly from
+# GitHub on Hostinger without a build step. Run `npm run build` and commit dist
+# after any frontend change.

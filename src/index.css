@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* prevent decorative blur glows from creating horizontal scroll on mobile */
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-brand-deep text-slate-300 font-sans antialiased;
+  margin: 0;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  /* subtle vignette + top brand glow for depth */
+  background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(26, 111, 196, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(55, 195, 232, 0.08), transparent 50%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(55, 195, 232, 0.3);
+  color: #fff;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-6 py-3
+           font-semibold text-white shadow-lg shadow-brand/25 transition-all duration-200
+           hover:-translate-y-0.5 hover:bg-brand-light hover:shadow-glow focus:outline-none
+           focus:ring-2 focus:ring-brand-cyan focus:ring-offset-2 focus:ring-offset-brand-deep
+           disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-white/15
+           bg-white/[0.02] px-6 py-3 font-semibold text-white backdrop-blur transition-all
+           duration-200 hover:-translate-y-0.5 hover:border-brand-cyan/60 hover:bg-white/5
+           hover:text-brand-cyan focus:outline-none focus:ring-2 focus:ring-brand-cyan;
+  }
+
+  .card {
+    @apply rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm;
+  }
+
+  .glass {
+    @apply border border-white/10 bg-white/[0.03] backdrop-blur-md;
+  }
+
+  /* HUD-style targeting-bracket tag — a deliberate "security console" label
+     that replaces the generic rounded pill. Corner brackets are drawn with
+     pseudo-elements so it works both left-aligned and centered. */
+  .section-eyebrow {
+    @apply relative mb-5 inline-flex max-w-full items-center gap-2.5 px-4 py-1.5 font-display
+           text-[0.62rem] font-semibold uppercase leading-tight tracking-[0.22em] text-brand-cyan
+           sm:text-[0.7rem] sm:leading-none sm:tracking-[0.3em];
+  }
+  .section-eyebrow::before,
+  .section-eyebrow::after {
+    content: '';
+    @apply pointer-events-none absolute top-0 h-full w-2.5 border-brand-cyan/50;
+  }
+  .section-eyebrow::before {
+    left: 0;
+    border-width: 1px 0 1px 1px; /* [ */
+  }
+  .section-eyebrow::after {
+    right: 0;
+    border-width: 1px 1px 1px 0; /* ] */
+  }
+  /* faint inner glow behind the label */
+  .section-eyebrow > span:last-child,
+  .section-eyebrow {
+    text-shadow: 0 0 14px rgba(55, 195, 232, 0.25);
+  }
+
+  /* live status node used inside the hero eyebrow */
+  .eyebrow-dot {
+    @apply relative flex h-1.5 w-1.5;
+  }
+  .eyebrow-dot::before {
+    content: '';
+    @apply absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-cyan opacity-75;
+  }
+  .eyebrow-dot::after {
+    content: '';
+    @apply relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-cyan shadow-glow;
+  }
+
+  .heading {
+    @apply font-display font-bold tracking-tightest text-white;
+  }
+
+  .h-section {
+    @apply heading text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1];
+  }
+
+  .lead {
+    @apply text-lg leading-relaxed text-slate-400;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-brand-cyan via-brand-light to-brand bg-clip-text text-transparent;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-slate-100
+           placeholder:text-slate-600 transition focus:border-brand-cyan focus:bg-white/[0.05]
+           focus:outline-none focus:ring-1 focus:ring-brand-cyan;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-300;
+  }
+
+  /* thin hairline divider with a glowing center */
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent;
+  }
+}
+
+/* Scroll-reveal (used by <Reveal/>) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Grid glow background */
+.cyber-grid {
+  background-image: linear-gradient(rgba(58, 160, 227, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58, 160, 227, 0.07) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 100%);
+}
+
+/* Dotted texture */
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Marquee fade edges */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Markdown rendering (blog posts) */
+.prose-yanova {
+  @apply text-slate-300 leading-relaxed;
+}
+.prose-yanova h1 {
+  @apply mt-8 mb-4 text-3xl font-bold text-white font-display;
+}
+.prose-yanova h2 {
+  @apply mt-8 mb-3 text-2xl font-bold text-white font-display;
+}
+.prose-yanova h3 {
+  @apply mt-6 mb-2 text-xl font-semibold text-white;
+}
+.prose-yanova p {
+  @apply my-4;
+}
+.prose-yanova a {
+  @apply text-brand-cyan underline underline-offset-2 hover:text-brand-light;
+}
+.prose-yanova ul {
+  @apply my-4 list-disc space-y-2 pl-6 marker:text-brand-cyan;
+}
+.prose-yanova ol {
+  @apply my-4 list-decimal space-y-2 pl-6 marker:text-brand-cyan;
+}
+.prose-yanova strong {
+  @apply font-semibold text-white;
+}
+.prose-yanova blockquote {
+  @apply my-4 border-l-4 border-brand-cyan/50 pl-4 italic text-slate-400;
+}
+.prose-yanova code {
+  @apply rounded bg-white/10 px-1.5 py-0.5 text-sm text-brand-cyan;
+}
+.prose-yanova img {
+  @apply my-6 rounded-xl;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #050c1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #14406e;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1a6fc4;
+}
