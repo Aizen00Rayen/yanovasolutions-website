@@ -6,9 +6,18 @@ import { JWT_SECRET } from '../middleware/auth.js';
 
 const router = express.Router();
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+const sanitizeEnvVar = (val) => {
+  if (!val) return '';
+  let s = val.trim();
+  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+    s = s.slice(1, -1);
+  }
+  return s.trim();
+};
+
+const ADMIN_USERNAME = sanitizeEnvVar(process.env.ADMIN_USERNAME) || 'admin@yanovasolutions.tech';
+const ADMIN_PASSWORD = sanitizeEnvVar(process.env.ADMIN_PASSWORD) || 'adminYanova!2026';
+const JWT_EXPIRES_IN = sanitizeEnvVar(process.env.JWT_EXPIRES_IN) || '7d';
 
 // Hash the configured password once at startup so we never compare plaintext.
 const ADMIN_PASSWORD_HASH = bcrypt.hashSync(ADMIN_PASSWORD, 10);

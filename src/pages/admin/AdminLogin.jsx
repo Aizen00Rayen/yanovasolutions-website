@@ -63,7 +63,7 @@ export default function AdminLogin() {
                   id="username" name="username" required autoFocus
                   value={form.username}
                   onChange={(e) => setForm((f) => ({ ...f, username: e.target.value }))}
-                  className="input pl-11" placeholder="admin@yanovasolutions.tech"
+                  className="input pl-11"
                 />
               </div>
             </div>
@@ -75,7 +75,7 @@ export default function AdminLogin() {
                   id="password" name="password" type="password" required
                   value={form.password}
                   onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
-                  className="input pl-11" placeholder="••••••••"
+                  className="input pl-11"
                 />
               </div>
             </div>
