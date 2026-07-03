@@ -49,10 +49,21 @@ export default function WhyUs() {
 }
 
 function Metric({ big, sub }) {
+  // Short values (like "4") get the big-number treatment; longer word-values
+  // shrink so they never overflow the narrow 3-column cards.
+  const short = String(big).length <= 4;
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center">
-      <div className="font-display text-xl font-bold text-brand-cyan sm:text-2xl">{big}</div>
-      <div className="mt-1 text-[11px] uppercase tracking-wide text-slate-500">{sub}</div>
+    <div className="flex min-h-[84px] flex-col items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.02] px-1.5 py-4 text-center">
+      <div
+        className={`font-display font-bold leading-tight text-brand-cyan [hyphens:none] [overflow-wrap:anywhere] ${
+          short ? 'text-2xl sm:text-3xl' : 'text-[0.7rem] sm:text-sm lg:text-base'
+        }`}
+      >
+        {big}
+      </div>
+      <div className="mt-1.5 text-[9px] uppercase leading-tight tracking-wide text-slate-500 sm:text-[10px] lg:text-[11px]">
+        {sub}
+      </div>
     </div>
   );
 }

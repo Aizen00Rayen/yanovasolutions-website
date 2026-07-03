@@ -1,6 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import rateLimit from 'express-rate-limit';
 import { JWT_SECRET } from '../middleware/auth.js';
 
@@ -16,8 +17,20 @@ const sanitizeEnvVar = (val) => {
 };
 
 const ADMIN_USERNAME = sanitizeEnvVar(process.env.ADMIN_USERNAME) || 'admin@yanovasolutions.tech';
-const ADMIN_PASSWORD = sanitizeEnvVar(process.env.ADMIN_PASSWORD) || 'adminYanova!2026';
 const JWT_EXPIRES_IN = sanitizeEnvVar(process.env.JWT_EXPIRES_IN) || '7d';
+
+// SECURITY: the admin password must come from the environment. We do NOT ship a
+// real password in source (that would leak it via the repo). If it is missing we
+// generate a random one and print it to the server logs so the operator can still
+// sign in, while making the misconfiguration obvious.
+let ADMIN_PASSWORD = sanitizeEnvVar(process.env.ADMIN_PASSWORD);
+if (!ADMIN_PASSWORD) {
+  ADMIN_PASSWORD = crypto.randomBytes(9).toString('base64url');
+  console.warn(
+    `⚠  ADMIN_PASSWORD is not set. Generated a temporary password for this run: ${ADMIN_PASSWORD}`
+  );
+  console.warn('   Set ADMIN_PASSWORD as an environment variable to use a stable password.');
+}
 
 // Hash the configured password once at startup so we never compare plaintext.
 const ADMIN_PASSWORD_HASH = bcrypt.hashSync(ADMIN_PASSWORD, 10);

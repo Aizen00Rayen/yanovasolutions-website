@@ -1,6 +1,7 @@
 import express from 'express';
 import db, { slugify } from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
+import { safeUrl } from '../utils.js';
 
 const router = express.Router();
 
@@ -57,7 +58,7 @@ function readPayload(body) {
     excerpt_fr: (b.excerpt_fr || '').trim(),
     content_en: (b.content_en || '').trim(),
     content_fr: (b.content_fr || '').trim(),
-    cover_image: (b.cover_image || '').trim() || null,
+    cover_image: safeUrl(b.cover_image) || null,
     tags: (b.tags || '').trim(),
     published: b.published === false || b.published === 0 ? 0 : 1,
     slug: (b.slug || '').trim(),

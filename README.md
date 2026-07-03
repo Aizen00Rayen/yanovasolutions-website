@@ -73,7 +73,7 @@ npm start
 - Credentials come from environment variables (`ADMIN_USERNAME`, `ADMIN_PASSWORD`).
 - Configured credentials:
   - Username: `admin@yanovasolutions.tech`
-  - Password: `adminYanova!2026`
+  - Password: set via the `ADMIN_PASSWORD` environment variable (never stored in the repo)
 - **Change `JWT_SECRET`** (and rotate the password) before/after going live. On Hostinger,
   set these as environment variables in the Node.js app panel — see [DEPLOYMENT.md](./DEPLOYMENT.md).
 

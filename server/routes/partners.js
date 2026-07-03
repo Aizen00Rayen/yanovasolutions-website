@@ -1,15 +1,16 @@
 import express from 'express';
 import db from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
+import { safeUrl } from '../utils.js';
 
 const router = express.Router();
 
 function readPayload(body) {
   const b = body || {};
   return {
-    name: (b.name || '').trim(),
-    logo_url: (b.logo_url || '').trim() || null,
-    website_url: (b.website_url || '').trim() || null,
+    name: (b.name || '').trim().slice(0, 120),
+    logo_url: safeUrl(b.logo_url) || null,
+    website_url: safeUrl(b.website_url) || null,
     sort_order: Number.isFinite(Number(b.sort_order)) ? Number(b.sort_order) : 0,
   };
 }

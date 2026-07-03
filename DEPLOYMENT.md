@@ -40,10 +40,15 @@ In the Node.js app panel, add these environment variables (**do this — the `.e
 ```
 NODE_ENV=production
 ADMIN_USERNAME=admin@yanovasolutions.tech
-ADMIN_PASSWORD=adminYanova!2026
+ADMIN_PASSWORD=<the admin password you choose>
 JWT_SECRET=<paste a long random string>
 JWT_EXPIRES_IN=7d
 ```
+
+> Security: never commit real credentials to the repo. Set `ADMIN_PASSWORD` and
+> `JWT_SECRET` only here (Hostinger env vars). If `ADMIN_PASSWORD` is missing the
+> server generates a temporary one and prints it to the logs; if `JWT_SECRET` is
+> missing it generates an ephemeral one (sessions reset on restart).
 
 - **Do not** set `PORT` — Hostinger assigns it automatically (the app reads `process.env.PORT`).
 - Generate a strong `JWT_SECRET`:
@@ -64,7 +69,7 @@ Because `dist/` is already in the repo, **there is no build step**. Visit your d
 - Public site: `https://yourdomain.com/`
 - Admin panel: `https://yourdomain.com/admin/login`
   - Username: `admin@yanovasolutions.tech`
-  - Password: `adminYanova!2026`
+  - Password: the value you set in `ADMIN_PASSWORD`
 
 ## 5. (Optional) seed starter content
 
