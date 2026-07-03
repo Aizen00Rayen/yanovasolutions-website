@@ -54,12 +54,6 @@ export default function Footer() {
           <p className="inline-flex items-center gap-2">
             <Shield size={14} /> © {year} Yanova Solutions. {t('footer.rights')}
           </p>
-          <div className="flex items-center gap-4">
-            <span>{t('footer.legal')}</span>
-            <Link to="/admin/login" className="transition hover:text-brand-cyan">
-              {t('footer.admin')}
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
